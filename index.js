@@ -23,7 +23,7 @@ module.exports = function(url, opts) {
       }
     }
     if (line.indexOf('data: ') === 0) dataBuf += (dataBuf ? '\n' : '') + line.slice(6)
-    if (line.indexOf('id: ') === 0) id = line.slice(6)
+    if (line.indexOf('id: ') === 0) id = line.slice(4)
     if (line.indexOf('event: ') === 0) event = line.slice(6)
 
   })
