@@ -16,7 +16,6 @@ module.exports = function(url, opts) {
       if (!dataBuf) return
       var data = dataBuf
       dataBuf = ''
-      console.log('data', data)
       return {
         id : id,
         event : event,
