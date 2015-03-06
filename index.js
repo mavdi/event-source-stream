@@ -5,22 +5,32 @@ module.exports = function(url, opts) {
   if (!opts) opts = {}
   if (typeof opts.retry !== 'number' && opts.retry !== false) opts.retry = 3000
 
-  var buf = ''
+  var dataBuf = ''
+  var event = ''
+  var id = ''
   var req
   var timeout
 
   var parse = split(function(line) {
     if (!line) {
-      if (!buf) return
-      var data = buf
-      buf = ''
-      return data
+      if (!dataBuf) return
+      var data = dataBuf
+      dataBuf = ''
+      console.log('data', data)
+      return {
+        id : id,
+        event : event,
+        data : data
+      }
     }
-    if (line.indexOf('data: ') === 0) buf += (buf ? '\n' : '') + line.slice(6)
+    if (line.indexOf('data: ') === 0) dataBuf += (dataBuf ? '\n' : '') + line.slice(6)
+    if (line.indexOf('id: ') === 0) id = line.slice(6)
+    if (line.indexOf('event: ') === 0) event = line.slice(6)
+
   })
 
   var connect = function() {
-    buf = ''
+    dataBuf = ''
     req = request(url)
 
     req.on('error', function(err) {
