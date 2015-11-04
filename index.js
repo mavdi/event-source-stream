@@ -30,7 +30,7 @@ module.exports = function(url, opts) {
 
   var connect = function() {
     dataBuf = ''
-    req = request({url: url, headers: opts.headers})
+    req = request({url: url, headers: opts.headers, method: opts.method})
 
     req.on('error', function(err) {
       if (!opts.retry) parse.emit('error', err)
